@@ -1,0 +1,12 @@
+(* Source files for sml-mime. Vendors sml-http (which vendors sml-uri). *)
+
+$(SML_LIB)/basis/basis.mlb
+
+../sml-http/sources.mlb
+
+mediatype.sig
+mediatype.sml
+mimetable.sig
+mimetable.sml
+multipart.sig
+multipart.sml
