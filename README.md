@@ -59,6 +59,30 @@ val SOME parts = Multipart.split { boundary = b, body = rawBody }
 val SOME "avatar" = Multipart.fieldName (hd parts)
 ```
 
+`make example` builds and runs [`examples/demo.sml`](examples/demo.sml), which
+parses a media type and looks up its parameters, looks up a few filename
+extensions, and builds a multipart body from two parts before splitting it
+back apart (output is byte-identical under MLton and Poly/ML):
+
+```
+sml-mime demo
+MediaType.parse "text/html; charset=UTF-8":
+  essence          = text/html
+  format           = text/html; charset=UTF-8
+  param "charset"  = UTF-8
+  param "CharSet"  = UTF-8
+  param "boundary" = NONE
+MimeTable lookups:
+  byFilename "index.html" = text/html; charset=utf-8
+  byFilename "photo.PNG" = image/png
+  byFilename "archive.tar.xyz" = NONE
+  default            = application/octet-stream
+Multipart.build produced 222 bytes
+Multipart.split recovered 2 parts:
+  fieldName = username, fileName = NONE, body = "ada"
+  fieldName = avatar, fileName = a.png, body = "PNGDATA..."
+```
+
 ## Build
 
 ```sh
